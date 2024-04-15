@@ -1,0 +1,30 @@
+name: Event Demo 1
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+  push:
+    branches:
+      - main # main
+      - "dev-*" # dev-new dev-this-is-new
+      - "feature/**" # feature/new feature/new/button
+    paths-ignore:
+      - ".github/**" # Ignore changes to the .github folder
+      - "docs/**" # Ignore changes to the docs folder
+      - "README.md" # Ignore changes to the README.md file
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output event data
+        run: echo "The event name is ${{ github.event }}"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test
