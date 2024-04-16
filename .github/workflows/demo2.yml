@@ -28,7 +28,7 @@ jobs:
         id: publish
         run: find dist/assets/*.js -type f -execdir echo 'js-script-file={}' >> $GITHUB_OUTPUT ';'
       - name: Archive website
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-files
           path:
@@ -39,9 +39,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-files
           path: dist
       - name: Output contents of dist folder
-        run: ls dist
+        run: ls
